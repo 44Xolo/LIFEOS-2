@@ -1,0 +1,580 @@
+{
+  "entities": {
+    "UserWorkspace": {
+      "title": "UserWorkspace",
+      "description": "User workspace preferences and POPIA consent settings",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "roleTitle": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["ZAR", "USD", "EUR", "GBP"]
+        },
+        "theme": {
+          "type": "string",
+          "enum": ["light", "dark"]
+        },
+        "aiContextEnabled": {
+          "type": "boolean"
+        },
+        "opportunityAlertsEnabled": {
+          "type": "boolean"
+        },
+        "billRemindersEnabled": {
+          "type": "boolean"
+        },
+        "popiaAccepted": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "displayName",
+        "currency",
+        "theme",
+        "aiContextEnabled",
+        "opportunityAlertsEnabled",
+        "billRemindersEnabled",
+        "popiaAccepted",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserPrivateProfile": {
+      "title": "UserPrivateProfile",
+      "description": "Isolated PII record for the authenticated user",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 32
+        },
+        "businessName": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 100
+        },
+        "location": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 100
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["ownerId", "email", "updatedAt"]
+    },
+    "FinanceEntry": {
+      "title": "FinanceEntry",
+      "description": "Personal or business financial transaction",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["personal", "business"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["income", "expense"]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "amount": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "scope",
+        "type",
+        "title",
+        "category",
+        "amount",
+        "date",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "BudgetGoal": {
+      "title": "BudgetGoal",
+      "description": "Savings goal or monthly category budget",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["savings", "budget", "bill"]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "targetAmount": {
+          "type": "number"
+        },
+        "currentAmount": {
+          "type": "number"
+        },
+        "dueDate": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 10
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "paid", "completed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "kind",
+        "title",
+        "category",
+        "targetAmount",
+        "currentAmount",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "BusinessClient": {
+      "title": "BusinessClient",
+      "description": "Small business customer contact record",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "company": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 160
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 32
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["ownerId", "name", "createdAt", "updatedAt"]
+    },
+    "BusinessDocument": {
+      "title": "BusinessDocument",
+      "description": "Professional quotation or invoice",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "docNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "docType": {
+          "type": "string",
+          "enum": ["quote", "invoice"]
+        },
+        "clientName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "clientEmail": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 160
+        },
+        "itemSummary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "subtotal": {
+          "type": "number"
+        },
+        "includeVat": {
+          "type": "boolean"
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "dueDate": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "sent", "paid"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "docNumber",
+        "docType",
+        "clientName",
+        "itemSummary",
+        "subtotal",
+        "includeVat",
+        "totalAmount",
+        "dueDate",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "LifeTask": {
+      "title": "LifeTask",
+      "description": "Personal task, deadline, or scheduled appointment",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "enum": ["personal", "work", "finance", "learning", "health"]
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "dueDate": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "timeSlot": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 20
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "completed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "title",
+        "category",
+        "priority",
+        "dueDate",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SavedOpportunity": {
+      "title": "SavedOpportunity",
+      "description": "Bookmarked job, scholarship, grant, or training opportunity",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "opportunityId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "organization": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["job", "scholarship", "grant", "internship", "business", "training"]
+        },
+        "deadline": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "status": {
+          "type": "string",
+          "enum": ["saved", "preparing", "applied"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "opportunityId",
+        "title",
+        "organization",
+        "kind",
+        "deadline",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "LearningTrack": {
+      "title": "LearningTrack",
+      "description": "Personalized learning plan and study progress",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "skillArea": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "level": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "advanced"]
+        },
+        "completedLessons": {
+          "type": "integer"
+        },
+        "totalLessons": {
+          "type": "integer"
+        },
+        "studyReminder": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        "nextTopic": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "completed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ownerId",
+        "title",
+        "skillArea",
+        "level",
+        "completedLessons",
+        "totalLessons",
+        "nextTopic",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserWorkspace" },
+      "description": "Root workspace preferences and POPIA consent flags owned by userId"
+    },
+    "/users/{userId}/private/{profileId}": {
+      "schema": { "$ref": "#/entities/UserPrivateProfile" },
+      "description": "PII-isolated private profile document owned by userId"
+    },
+    "/users/{userId}/transactions/{entryId}": {
+      "schema": { "$ref": "#/entities/FinanceEntry" },
+      "description": "Personal and business income/expense records"
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": { "$ref": "#/entities/BudgetGoal" },
+      "description": "Monthly budgets, savings goals, and bill reminders"
+    },
+    "/users/{userId}/clients/{clientId}": {
+      "schema": { "$ref": "#/entities/BusinessClient" },
+      "description": "Small business CRM client records"
+    },
+    "/users/{userId}/documents/{docId}": {
+      "schema": { "$ref": "#/entities/BusinessDocument" },
+      "description": "Quotations and invoices for small business management"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/LifeTask" },
+      "description": "Daily tasks, appointments, and reminders"
+    },
+    "/users/{userId}/opportunities/{oppId}": {
+      "schema": { "$ref": "#/entities/SavedOpportunity" },
+      "description": "Saved and tracked opportunities"
+    },
+    "/users/{userId}/learning/{trackId}": {
+      "schema": { "$ref": "#/entities/LearningTrack" },
+      "description": "Personalized learning plans and study progress"
+    }
+  }
+}

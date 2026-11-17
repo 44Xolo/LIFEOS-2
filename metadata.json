@@ -1,0 +1,8 @@
+{
+  "name": "LIFEOS",
+  "description": "AI-Powered Operating System for Everyday Life — Manage personal finances, small business operations, tasks, opportunities, and learning in one unified platform.",
+  "requestFramePermissions": ["microphone", "geolocation"],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
